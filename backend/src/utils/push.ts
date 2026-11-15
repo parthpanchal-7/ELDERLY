@@ -1,20 +1,31 @@
-import webpush from 'web-push';
 import { ENV } from '../config/env.js';
 
-let pushEnabled = false;
+let pushClient: any = null;
+let pushInitAttempted = false;
 
-if (ENV.VAPID_PUBLIC_KEY && ENV.VAPID_PRIVATE_KEY) {
-  try {
-    webpush.setVapidDetails(
-      ENV.VAPID_SUBJECT || 'mailto:parthpanchal1932@gmail.com',
-      ENV.VAPID_PUBLIC_KEY,
-      ENV.VAPID_PRIVATE_KEY
-    );
-    pushEnabled = true;
-    console.log('✅ Web Push VAPID keys configured successfully');
-  } catch (err: any) {
-    console.warn(`[WebPush Init Warning] ${err.message}`);
+async function getWebPushClient() {
+  if (pushClient) return pushClient;
+  if (pushInitAttempted) return null;
+  pushInitAttempted = true;
+
+  if (ENV.VAPID_PUBLIC_KEY && ENV.VAPID_PRIVATE_KEY) {
+    try {
+      const mod = await import('web-push');
+      const webpush = (mod as any).default || mod;
+      webpush.setVapidDetails(
+        ENV.VAPID_SUBJECT || 'mailto:parthpanchal1932@gmail.com',
+        ENV.VAPID_PUBLIC_KEY,
+        ENV.VAPID_PRIVATE_KEY
+      );
+      pushClient = webpush;
+      console.log('✅ Web Push VAPID configured successfully');
+      return pushClient;
+    } catch (err: any) {
+      console.warn(`[WebPush Init Warning] ${err.message}`);
+      return null;
+    }
   }
+  return null;
 }
 
 export interface PushNotificationPayload {
@@ -36,13 +47,13 @@ export async function sendWebPush(
   },
   payload: PushNotificationPayload
 ): Promise<boolean> {
-  if (!pushEnabled) {
-    console.log('[WebPush Notice] VAPID keys not configured; skipped dispatch.');
+  const client = await getWebPushClient();
+  if (!client) {
     return false;
   }
 
   try {
-    await webpush.sendNotification(
+    await client.sendNotification(
       subscription,
       JSON.stringify({
         title: payload.title,
@@ -62,4 +73,4 @@ export async function sendWebPush(
   }
 }
 
-export const isPushEnabled = () => pushEnabled;
+export const isPushEnabled = () => !!(ENV.VAPID_PUBLIC_KEY && ENV.VAPID_PRIVATE_KEY);
