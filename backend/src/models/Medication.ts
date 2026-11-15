@@ -80,5 +80,7 @@ const MedicationSchema = new Schema<IMedication>(
   { timestamps: true }
 );
 
+MedicationSchema.index({ careProfile: 1, status: 1 });
+
 export const Medication =
   mongoose.models.Medication || mongoose.model<IMedication>('Medication', MedicationSchema);

@@ -43,6 +43,8 @@ const DoseOccurrenceSchema = new Schema<IDoseOccurrence>(
 );
 
 DoseOccurrenceSchema.index({ medication: 1, scheduledTime: 1 }, { unique: true });
+DoseOccurrenceSchema.index({ careProfile: 1, scheduledTime: 1, status: 1 });
+DoseOccurrenceSchema.index({ careProfile: 1, status: 1 });
 
 export const DoseOccurrence =
   mongoose.models.DoseOccurrence ||
