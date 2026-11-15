@@ -24,6 +24,9 @@ import documentRoutes from './routes/document.routes.js';
 export function createServer() {
   const app = express();
 
+  // Trust proxy for Vercel / reverse proxy deployment
+  app.set('trust proxy', 1);
+
   // Security & parsing middleware
   app.use(helmet({
     contentSecurityPolicy: false, // Allows flexible UI assets
