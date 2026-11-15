@@ -14,7 +14,7 @@ export const Card: React.FC<CardProps> = ({ className, variant = 'default', chil
   };
 
   return (
-    <div className={clsx('rounded-2xl p-6 transition-all', variants[variant], className)} {...props}>
+    <div className={clsx('rounded-2xl p-4 sm:p-6 transition-all', variants[variant], className)} {...props}>
       {children}
     </div>
   );

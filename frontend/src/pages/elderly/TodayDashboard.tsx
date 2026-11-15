@@ -204,7 +204,7 @@ export default function TodayDashboard() {
         {nextDose ? (
           <Card
             variant={nextDose.status === 'unconfirmed' ? 'warning' : 'highlight'}
-            className="p-8 border-4 ring-8 ring-teal/10"
+            className="p-5 sm:p-8 border-2 sm:border-4 ring-4 sm:ring-8 ring-teal/10"
           >
             <div className="flex items-center justify-between flex-wrap gap-2 mb-4">
               <span className="text-xs font-black uppercase tracking-widest text-teal bg-soft-mint px-3 py-1 rounded-full border border-teal/20">
@@ -309,27 +309,27 @@ export default function TodayDashboard() {
                   return (
                     <div
                       key={dose._id}
-                      className={`p-5 rounded-2xl bg-white border-2 transition-all flex items-center justify-between ${
+                      className={`p-4 sm:p-5 rounded-2xl bg-white border-2 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                         isTaken ? 'border-emerald-200 bg-emerald-50/30 opacity-80' : 'border-stone-200'
                       }`}
                     >
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-3 min-w-0">
                         <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0 ${
                             isTaken ? 'bg-emerald-100 text-emerald-800' : 'bg-teal/15 text-teal'
                           }`}
                         >
                           {new Date(dose.scheduledTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
-                        <div>
-                          <p className="text-lg font-bold text-navy">{dose.medication?.name}</p>
-                          <p className="text-xs text-stone-500">
+                        <div className="min-w-0">
+                          <p className="text-base sm:text-lg font-bold text-navy truncate">{dose.medication?.name}</p>
+                          <p className="text-xs text-stone-500 truncate">
                             {dose.medication?.strength} {dose.medication?.unit} • {dose.medication?.instructions}
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 self-end sm:self-center">
                         <Badge status={dose.status} />
                         {!isTaken && (
                           <Button

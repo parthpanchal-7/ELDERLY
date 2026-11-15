@@ -70,11 +70,24 @@ html.text-size-xlarge {
     background-color: var(--color-canvas);
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   body {
     min-height: 100vh;
     margin: 0;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Hide scrollbar for clean touch swipe on mobile */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   /* Accessible focus ring */
