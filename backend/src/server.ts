@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db.js';
+import { isRedisConnected } from './config/redis.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 
@@ -69,6 +70,7 @@ export function createServer() {
     res.json({
       status: 'healthy',
       app: 'SaathiCare API',
+      redis: isRedisConnected() ? 'connected' : 'offline/in-memory',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
     });

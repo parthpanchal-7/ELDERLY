@@ -1,7 +1,8 @@
 import { Router, Response } from 'express';
-import { Notification, NotificationPreference, CareProfile } from '../models/index.js';
+import { Notification, NotificationPreference, CareProfile, PushSubscription } from '../models/index.js';
 import { authenticate, AuthRequest, requireProfileAccess } from '../middleware/auth.js';
 import { sendEmail, buildDoseReminderEmail } from '../utils/email.js';
+import { sendWebPush } from '../utils/push.js';
 
 const router = Router();
 
@@ -94,13 +95,56 @@ router.post('/test', authenticate, async (req: AuthRequest, res: Response) => {
       emailSent = result.success;
     }
 
+    let pushSent = false;
+    try {
+      const subs = await PushSubscription.find({ user: req.user._id });
+      for (const sub of subs) {
+        const sent = await sendWebPush(sub, {
+          title: 'SaathiCare Notification',
+          body: notif.message,
+        });
+        if (sent) pushSent = true;
+      }
+    } catch {
+      // Non-blocking
+    }
+
     res.json({
       message: 'Test notification processed',
       notification: notif,
       emailSent,
+      pushSent,
     });
   } catch (err: any) {
     res.status(500).json({ error: err.message || 'Failed to send test notification' });
+  }
+});
+
+// POST /notifications/push/subscribe (Registers browser web-push subscription)
+router.post('/push/subscribe', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { endpoint, keys } = req.body;
+    if (!endpoint || !keys?.p256dh || !keys?.auth) {
+      return res.status(400).json({ error: 'Invalid push subscription payload' });
+    }
+
+    const existing = await PushSubscription.findOne({ endpoint });
+    if (existing) {
+      existing.user = req.user._id;
+      existing.keys = keys;
+      await existing.save();
+      return res.json({ message: 'Push subscription updated' });
+    }
+
+    await PushSubscription.create({
+      user: req.user._id,
+      endpoint,
+      keys,
+    });
+
+    res.status(201).json({ message: 'Push subscription registered successfully' });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Failed to register push subscription' });
   }
 });
 
