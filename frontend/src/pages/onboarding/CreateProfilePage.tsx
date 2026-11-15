@@ -10,14 +10,14 @@ export default function CreateProfilePage() {
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState(user?.displayName || '');
-  const [dateOfBirth, setDateOfBirth] = useState('1952-05-15');
-  const [gender, setGender] = useState('male');
-  const [bloodGroup, setBloodGroup] = useState('B+');
-  const [chronicConditions, setChronicConditions] = useState('Hypertension, Type 2 Diabetes');
-  const [allergies, setAllergies] = useState('Penicillin');
-  const [primaryPhysician, setPrimaryPhysician] = useState('Dr. Alok Mehta');
-  const [emergencyPhone, setEmergencyPhone] = useState('+91 98765 43211');
-  const [emergencyName, setEmergencyName] = useState('Priya Sharma (Daughter)');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [gender, setGender] = useState('');
+  const [bloodGroup, setBloodGroup] = useState('');
+  const [chronicConditions, setChronicConditions] = useState('');
+  const [allergies, setAllergies] = useState('');
+  const [primaryPhysician, setPrimaryPhysician] = useState('');
+  const [emergencyPhone, setEmergencyPhone] = useState('');
+  const [emergencyName, setEmergencyName] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -96,6 +96,7 @@ export default function CreateProfilePage() {
                 value={bloodGroup}
                 onChange={(e) => setBloodGroup(e.target.value)}
                 options={[
+                  { value: '', label: 'Select blood group (optional)' },
                   { value: 'A+', label: 'A+' },
                   { value: 'A-', label: 'A-' },
                   { value: 'B+', label: 'B+' },

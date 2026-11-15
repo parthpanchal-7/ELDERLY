@@ -13,7 +13,7 @@ export default function CareCirclePage() {
 
   // Invite form
   const [role, setRole] = useState<'family_member' | 'caregiver'>('family_member');
-  const [relationship, setRelationship] = useState('Son');
+  const [relationship, setRelationship] = useState('');
   const [email, setEmail] = useState('');
   const [newPasscode, setNewPasscode] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);

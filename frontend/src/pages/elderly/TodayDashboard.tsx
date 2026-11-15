@@ -30,7 +30,7 @@ export default function TodayDashboard() {
 
   // Skip dose modal state
   const [skipModalDoseId, setSkipModalDoseId] = useState<string | null>(null);
-  const [skipReason, setSkipReason] = useState('Feeling nauseous / unwell');
+  const [skipReason, setSkipReason] = useState('');
 
   const fetchDashboardData = async () => {
     try {

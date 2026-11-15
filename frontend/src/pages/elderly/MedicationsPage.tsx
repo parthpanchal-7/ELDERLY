@@ -16,12 +16,12 @@ export default function MedicationsPage() {
   const [unit, setUnit] = useState('mg');
   const [form, setForm] = useState('tablet');
   const [frequency, setFrequency] = useState('daily');
-  const [time1, setTime1] = useState('08:00');
-  const [time2, setTime2] = useState('20:00');
-  const [mealContext, setMealContext] = useState('after_meal');
-  const [instructions, setInstructions] = useState('Take with water');
-  const [currentInventory, setCurrentInventory] = useState('30');
-  const [refillThreshold, setRefillThreshold] = useState('5');
+  const [time1, setTime1] = useState('');
+  const [time2, setTime2] = useState('');
+  const [mealContext, setMealContext] = useState('no_restriction');
+  const [instructions, setInstructions] = useState('');
+  const [currentInventory, setCurrentInventory] = useState('');
+  const [refillThreshold, setRefillThreshold] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchMedications = async () => {

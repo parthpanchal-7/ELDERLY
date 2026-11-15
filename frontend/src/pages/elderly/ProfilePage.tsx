@@ -12,9 +12,9 @@ export default function ProfilePage() {
 
   // New vital observation form state
   const [obsType, setObsType] = useState('blood_pressure');
-  const [obsValue, setObsValue] = useState('120');
-  const [obsSecondary, setObsSecondary] = useState('80');
-  const [obsContext, setObsContext] = useState('Morning resting reading');
+  const [obsValue, setObsValue] = useState('');
+  const [obsSecondary, setObsSecondary] = useState('');
+  const [obsContext, setObsContext] = useState('');
   const [isAddingObs, setIsAddingObs] = useState(false);
 
   const fetchProfileAndVitals = async () => {

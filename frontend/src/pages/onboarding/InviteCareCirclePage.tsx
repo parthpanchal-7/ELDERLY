@@ -10,7 +10,7 @@ export default function InviteCareCirclePage() {
   const profileId = location.state?.profileId;
 
   const [role, setRole] = useState<'family_member' | 'caregiver'>('family_member');
-  const [relationship, setRelationship] = useState('Daughter');
+  const [relationship, setRelationship] = useState('');
   const [email, setEmail] = useState('');
   const [passcodeData, setPasscodeData] = useState<{ passcode: string; expiresAt: string } | null>(null);
   const [copied, setCopied] = useState(false);

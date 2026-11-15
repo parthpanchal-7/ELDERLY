@@ -14,7 +14,7 @@ export default function RoutinesPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('hydration');
-  const [time, setTime] = useState('07:00');
+  const [time, setTime] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchRoutines = async () => {

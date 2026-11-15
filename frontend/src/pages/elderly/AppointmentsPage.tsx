@@ -13,8 +13,8 @@ export default function AppointmentsPage() {
   // Form state
   const [title, setTitle] = useState('');
   const [doctorName, setDoctorName] = useState('');
-  const [specialty, setSpecialty] = useState('Cardiology');
-  const [clinicOrHospital, setClinicOrHospital] = useState('Apollo Hospital');
+  const [specialty, setSpecialty] = useState('');
+  const [clinicOrHospital, setClinicOrHospital] = useState('');
   const [appointmentDateTime, setAppointmentDateTime] = useState('');
   const [locationAddress, setLocationAddress] = useState('');
   const [notes, setNotes] = useState('');
