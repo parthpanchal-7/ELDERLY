@@ -70,16 +70,16 @@ export default function LandingPage() {
               </span>
             </button>
 
-            {/* Language Toggle (EN / HI) */}
+            {/* Language Toggle (English / हिंदी) */}
             <button
               onClick={toggleLanguage}
-              className="px-3 py-2 rounded-xl border-2 border-stone-300 hover:border-teal text-navy font-bold text-sm min-h-[44px] flex items-center space-x-1.5 transition-all bg-white"
-              title="Switch Language (English / हिंदी)"
+              className="px-3.5 py-2 rounded-xl border-2 border-teal/40 hover:border-teal text-navy font-bold text-sm min-h-[44px] flex items-center space-x-2 transition-all bg-soft-mint/40 hover:bg-soft-mint"
+              title="Switch Language / भाषा बदलें (English / हिंदी)"
               aria-label={`Switch Language, current language is ${language === 'en' ? 'English' : 'Hindi'}`}
             >
-              <Languages className="w-4 h-4 text-teal" />
-              <span className="font-extrabold uppercase text-teal">
-                {language === 'en' ? 'EN' : 'HI'}
+              <Languages className="w-5 h-5 text-teal" />
+              <span className="font-extrabold text-sm text-teal">
+                {language === 'en' ? 'हिंदी' : 'English'}
               </span>
             </button>
 
@@ -88,7 +88,7 @@ export default function LandingPage() {
             </Link>
             <Link to="/signup">
               <Button variant="primary" size="md">
-                {language === 'hi' ? 'शुरू करें' : 'Get Started'}
+                {t('getStarted')}
               </Button>
             </Link>
           </div>
@@ -101,24 +101,23 @@ export default function LandingPage() {
           <div>
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-soft-mint text-teal text-sm font-bold border border-teal/20 mb-6">
               <ShieldCheck className="w-4 h-4 mr-2" />
-              Smart Interconnected Healthcare for Older Adults
+              {t('heroBadge')}
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black italic text-navy tracking-tight leading-tight mb-6">
-              Care that feels <span className="text-teal underline decoration-accent decoration-wavy decoration-2">close to home.</span>
+              {t('heroTitlePrefix')} <span className="text-teal underline decoration-accent decoration-wavy decoration-2">{t('heroTitleHighlight')}</span>
             </h1>
             <p className="text-xl sm:text-2xl text-stone-700 leading-relaxed mb-8">
-              Empowering older adults with simple daily routines, medication schedules, and proactive Care Assurance.
-              Families stay informed with privacy-first passcodes, while caregivers coordinate with clarity.
+              {t('heroSubtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/signup">
                 <Button variant="primary" size="lg" className="w-full sm:w-auto text-xl">
-                  Start Free Care Circle <ArrowRight className="w-6 h-6 ml-2" />
+                  {t('startCareCircle')} <ArrowRight className="w-6 h-6 ml-2" />
                 </Button>
               </Link>
               <Link to="/login">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto text-xl">
-                  Sign In to Dashboard
+                  {t('signInDashboard')}
                 </Button>
               </Link>
             </div>
@@ -132,34 +131,34 @@ export default function LandingPage() {
                   SC
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold italic text-navy">Care Profile Overview</h3>
-                  <p className="text-xs font-semibold text-stone-500">Connected to Family & Dedicated Caregiver</p>
+                  <h3 className="text-xl font-bold italic text-navy">{t('previewTitle')}</h3>
+                  <p className="text-xs font-semibold text-stone-500">{t('previewSubtitle')}</p>
                 </div>
               </div>
               <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-extrabold">
-                Active Tracking
+                {t('activeTracking')}
               </span>
             </div>
 
             <div className="mt-6 space-y-4">
               <div className="p-4 rounded-2xl bg-amber-50 border-2 border-accent/40 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-bold text-accent uppercase tracking-wider">Next Dose Due</p>
-                  <p className="text-xl font-black text-navy mt-1">Prescribed Medication</p>
-                  <p className="text-sm text-stone-600">Scheduled Routine • With Meal</p>
+                  <p className="text-sm font-bold text-accent uppercase tracking-wider">{t('nextDoseDue')}</p>
+                  <p className="text-xl font-black text-navy mt-1">{t('prescribedMed')}</p>
+                  <p className="text-sm text-stone-600">{t('scheduledWithMeal')}</p>
                 </div>
                 <Button variant="primary" size="md">
-                  Mark Taken
+                  {t('markTakenBtn')}
                 </Button>
               </div>
 
               <div className="p-4 rounded-2xl bg-stone-50 border-2 border-stone-200 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-bold text-stone-500 uppercase tracking-wider">Upcoming Doctor Visit</p>
-                  <p className="text-lg font-bold text-navy mt-1">Specialist Consultation</p>
-                  <p className="text-xs text-stone-500">Scheduled Health Checkup • Medical Clinic</p>
+                  <p className="text-sm font-bold text-stone-500 uppercase tracking-wider">{t('upcomingDoctorVisit')}</p>
+                  <p className="text-lg font-bold text-navy mt-1">{t('specialistConsultation')}</p>
+                  <p className="text-xs text-stone-500">{t('clinicCheckupDesc')}</p>
                 </div>
-                <span className="text-teal font-extrabold text-sm">Synchronized</span>
+                <span className="text-teal font-extrabold text-sm">{t('synchronized')}</span>
               </div>
             </div>
           </div>
@@ -171,10 +170,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-black italic text-navy mb-4">
-              Built with purpose for every member of the care circle
+              {t('rolesTitle')}
             </h2>
             <p className="text-xl text-stone-600">
-              Each user enjoys a dedicated experience designed to eliminate anxiety and foster dignity.
+              {t('rolesSubtitle')}
             </p>
           </div>
 
@@ -185,13 +184,13 @@ export default function LandingPage() {
                 <div className="w-16 h-16 rounded-2xl bg-teal/15 text-teal flex items-center justify-center mb-6">
                   <Heart className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-black italic text-navy mb-3">Older Adult (Profile Owner)</h3>
+                <h3 className="text-2xl font-black italic text-navy mb-3">{t('roleElderlyTitle')}</h3>
                 <p className="text-lg text-stone-600 mb-6 leading-relaxed">
-                  Huge 48px+ buttons, high-contrast text, voice readout, and full control over who has access to your medical records.
+                  {t('roleElderlyDesc')}
                 </p>
               </div>
               <Link to="/signup" className="font-bold text-lg text-teal flex items-center hover:underline">
-                Explore Elderly Mode <ArrowRight className="w-5 h-5 ml-1" />
+                {t('exploreElderly')} <ArrowRight className="w-5 h-5 ml-1" />
               </Link>
             </div>
 
@@ -201,13 +200,13 @@ export default function LandingPage() {
                 <div className="w-16 h-16 rounded-2xl bg-amber-100 text-accent flex items-center justify-center mb-6">
                   <Users className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-black italic text-navy mb-3">Family Member</h3>
+                <h3 className="text-2xl font-black italic text-navy mb-3">{t('roleFamilyTitle')}</h3>
                 <p className="text-lg text-stone-600 mb-6 leading-relaxed">
-                  Real-time adherence trends, overdue dose escalation alerts, appointment synchronization, and peace of mind from anywhere.
+                  {t('roleFamilyDesc')}
                 </p>
               </div>
               <Link to="/signup" className="font-bold text-lg text-teal flex items-center hover:underline">
-                Explore Family Mode <ArrowRight className="w-5 h-5 ml-1" />
+                {t('exploreFamily')} <ArrowRight className="w-5 h-5 ml-1" />
               </Link>
             </div>
 
@@ -217,13 +216,13 @@ export default function LandingPage() {
                 <div className="w-16 h-16 rounded-2xl bg-soft-mint text-teal flex items-center justify-center mb-6">
                   <Clock className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-black italic text-navy mb-3">Professional Caregiver</h3>
+                <h3 className="text-2xl font-black italic text-navy mb-3">{t('roleCaregiverTitle')}</h3>
                 <p className="text-lg text-stone-600 mb-6 leading-relaxed">
-                  Patient task queue, medication administration logging with audit trails, vital observation recording, and escalation queues.
+                  {t('roleCaregiverDesc')}
                 </p>
               </div>
               <Link to="/signup" className="font-bold text-lg text-teal flex items-center hover:underline">
-                Explore Caregiver Mode <ArrowRight className="w-5 h-5 ml-1" />
+                {t('exploreCaregiver')} <ArrowRight className="w-5 h-5 ml-1" />
               </Link>
             </div>
           </div>
@@ -234,65 +233,65 @@ export default function LandingPage() {
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-black italic text-navy mb-4">
-            Six Innovations Going Beyond Basic Reminders
+            {t('innovationsTitle')}
           </h2>
           <p className="text-xl text-stone-600">
-            A closed-loop safety architecture protecting elderly health outcomes without algorithmic over-reach.
+            {t('innovationsSubtitle')}
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="p-6 bg-white rounded-2xl border-2 border-stone-200">
             <h4 className="text-xl font-bold italic text-navy mb-2 flex items-center">
-              <CheckCircle2 className="w-6 h-6 text-teal mr-2" /> Care Assurance Loop
+              <CheckCircle2 className="w-6 h-6 text-teal mr-2" /> {t('inno1Title')}
             </h4>
             <p className="text-stone-600 text-base">
-              Schedule → Remind → Confirm → Escalate → Respond. If a dose is overdue past 30 minutes, authorized family receives automated notifications.
+              {t('inno1Desc')}
             </p>
           </div>
 
           <div className="p-6 bg-white rounded-2xl border-2 border-stone-200">
             <h4 className="text-xl font-bold italic text-navy mb-2 flex items-center">
-              <Lock className="w-6 h-6 text-teal mr-2" /> One-Time Passcode Circle
+              <Lock className="w-6 h-6 text-teal mr-2" /> {t('inno2Title')}
             </h4>
             <p className="text-stone-600 text-base">
-              Inviting family requires an authenticated account AND a short-lived 24h bcrypt-hashed passcode with 5-attempt rate limiting.
+              {t('inno2Desc')}
             </p>
           </div>
 
           <div className="p-6 bg-white rounded-2xl border-2 border-stone-200">
             <h4 className="text-xl font-bold italic text-navy mb-2 flex items-center">
-              <Bell className="w-6 h-6 text-teal mr-2" /> Smart Refill Watch
+              <Bell className="w-6 h-6 text-teal mr-2" /> {t('inno3Title')}
             </h4>
             <p className="text-stone-600 text-base">
-              Automatically decrements physical inventory on confirmed doses and alerts family well before medication supplies run dry.
+              {t('inno3Desc')}
             </p>
           </div>
 
           <div className="p-6 bg-white rounded-2xl border-2 border-stone-200">
             <h4 className="text-xl font-bold italic text-navy mb-2 flex items-center">
-              <Smartphone className="w-6 h-6 text-teal mr-2" /> Accessibility Companion
+              <Smartphone className="w-6 h-6 text-teal mr-2" /> {t('inno4Title')}
             </h4>
             <p className="text-stone-600 text-base">
-              Atkinson Hyperlegible bold italic typography, 48px touch targets, browser speech synthesis read-aloud, and Hindi/English readiness.
+              {t('inno4Desc')}
             </p>
           </div>
 
           <div className="p-6 bg-white rounded-2xl border-2 border-stone-200">
             <h4 className="text-xl font-bold italic text-navy mb-2 flex items-center">
-              <Calendar className="w-6 h-6 text-teal mr-2" /> Doctor Appointments & .ics
+              <Calendar className="w-6 h-6 text-teal mr-2" /> {t('inno5Title')}
             </h4>
             <p className="text-stone-600 text-base">
-              Synchronize doctor visits, clinic maps, notes, and 1-click export to Google Calendar and Apple iCal with RFC 5545 format.
+              {t('inno5Desc')}
             </p>
           </div>
 
           <div className="p-6 bg-white rounded-2xl border-2 border-stone-200">
             <h4 className="text-xl font-bold italic text-navy mb-2 flex items-center">
-              <ShieldCheck className="w-6 h-6 text-teal mr-2" /> Immutable Audit Provenance
+              <ShieldCheck className="w-6 h-6 text-teal mr-2" /> {t('inno6Title')}
             </h4>
             <p className="text-stone-600 text-base">
-              Every dose confirmation, caregiver note, and record access is cryptographically audited with timestamp, actor, and IP footprint.
+              {t('inno6Desc')}
             </p>
           </div>
         </div>
@@ -304,14 +303,14 @@ export default function LandingPage() {
           <div>
             <div className="flex items-center space-x-2">
               <Heart className="w-6 h-6 text-teal fill-teal" />
-              <span className="text-2xl font-black italic">SaathiCare</span>
+              <span className="text-2xl font-black italic">{t('brandName')}</span>
             </div>
-            <p className="text-stone-300 text-sm mt-1">Care that feels close to home.</p>
+            <p className="text-stone-300 text-sm mt-1">{t('brandTagline')}</p>
           </div>
           <div className="flex space-x-6 text-sm font-semibold">
-            <Link to="/privacy" className="hover:text-teal transition-colors">Privacy & Security</Link>
-            <Link to="/login" className="hover:text-teal transition-colors">Sign In</Link>
-            <Link to="/signup" className="hover:text-teal transition-colors">Register</Link>
+            <Link to="/privacy" className="hover:text-teal transition-colors">{t('privacyAndSecurity')}</Link>
+            <Link to="/login" className="hover:text-teal transition-colors">{t('signIn')}</Link>
+            <Link to="/signup" className="hover:text-teal transition-colors">{t('register')}</Link>
           </div>
         </div>
       </footer>
