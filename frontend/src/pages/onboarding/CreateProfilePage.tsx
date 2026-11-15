@@ -82,13 +82,26 @@ export default function CreateProfilePage() {
               required
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Input
                 label="Date of Birth"
                 type="date"
                 value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
                 required
+              />
+
+              <Select
+                label="Gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                options={[
+                  { value: '', label: 'Select gender (optional)' },
+                  { value: 'male', label: 'Male' },
+                  { value: 'female', label: 'Female' },
+                  { value: 'other', label: 'Other' },
+                  { value: 'prefer_not_to_say', label: 'Prefer not to say' },
+                ]}
               />
 
               <Select

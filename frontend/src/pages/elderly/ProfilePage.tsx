@@ -125,8 +125,8 @@ export default function ProfilePage() {
                     <div className="space-y-3 text-base">
                       <p><strong className="text-stone-600">Full Name:</strong> {profile?.fullName}</p>
                       <p><strong className="text-stone-600">Date of Birth:</strong> {new Date(profile?.dateOfBirth).toLocaleDateString()}</p>
-                      <p><strong className="text-stone-600">Gender:</strong> {profile?.gender || 'Not specified'}</p>
-                      <p><strong className="text-stone-600">Blood Group:</strong> {profile?.bloodGroup || 'B+'}</p>
+                      <p><strong className="text-stone-600">Gender:</strong> {profile?.gender ? (profile.gender.charAt(0).toUpperCase() + profile.gender.slice(1).replace('_', ' ')) : 'Not specified'}</p>
+                      <p><strong className="text-stone-600">Blood Group:</strong> {profile?.bloodGroup || 'Not specified'}</p>
                     </div>
                   </div>
 
