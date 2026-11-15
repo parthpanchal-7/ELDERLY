@@ -5,8 +5,8 @@ describe('SaathiCare Medication & Appointments Engine', () => {
   it('generates valid RFC 5545 iCalendar data for doctor appointments', () => {
     const appt = {
       title: 'Quarterly Cardiology Review',
-      doctorName: 'Alok Mehta',
-      clinicOrHospital: 'Apollo Hospital',
+      doctorName: 'Sarah Jenkins',
+      clinicOrHospital: 'City General Hospital',
       appointmentDateTime: new Date('2026-11-20T10:30:00Z'),
       locationAddress: 'Ghaziabad, India',
       notes: 'Fasting lipid panel required',
@@ -16,8 +16,8 @@ describe('SaathiCare Medication & Appointments Engine', () => {
 
     expect(ics).toContain('BEGIN:VCALENDAR');
     expect(ics).toContain('VERSION:2.0');
-    expect(ics).toContain('SUMMARY:Quarterly Cardiology Review - Dr. Alok Mehta');
-    expect(ics).toContain('LOCATION:Apollo Hospital, Ghaziabad, India');
+    expect(ics).toContain('SUMMARY:Quarterly Cardiology Review - Dr. Sarah Jenkins');
+    expect(ics).toContain('LOCATION:City General Hospital, Ghaziabad, India');
     expect(ics).toContain('END:VCALENDAR');
   });
 

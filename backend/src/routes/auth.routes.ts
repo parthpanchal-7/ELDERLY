@@ -125,11 +125,14 @@ router.post('/login', authLimiter, async (req: Request, res: Response) => {
 // POST /auth/google
 router.post('/google', async (req: Request, res: Response) => {
   try {
-    const { credential, email, name, role } = req.body;
+    const { email, name, role } = req.body;
 
-    // Supports demo token or Google OAuth ID token
-    const targetEmail = (email || 'demo.google@saathicare.com').toLowerCase();
-    const targetName = name || 'Google User';
+    if (!email) {
+      return res.status(400).json({ error: 'Valid email is required for Google authentication.' });
+    }
+
+    const targetEmail = email.toLowerCase().trim();
+    const targetName = (name || email.split('@')[0]).trim();
 
     let user = await User.findOne({ email: targetEmail });
     if (!user) {

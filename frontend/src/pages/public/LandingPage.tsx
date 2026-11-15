@@ -76,15 +76,15 @@ export default function LandingPage() {
             <div className="flex items-center justify-between pb-6 border-b border-stone-200">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-full bg-soft-mint flex items-center justify-center text-teal font-black">
-                  RS
+                  SC
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold italic text-navy">Ramesh Sharma (72)</h3>
-                  <p className="text-xs font-semibold text-stone-500">Care Circle Active: Priya (Daughter) & Nurse Sunita</p>
+                  <h3 className="text-xl font-bold italic text-navy">Care Profile Overview</h3>
+                  <p className="text-xs font-semibold text-stone-500">Connected to Family & Dedicated Caregiver</p>
                 </div>
               </div>
               <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-extrabold">
-                92% Adherence
+                Active Tracking
               </span>
             </div>
 
@@ -92,8 +92,8 @@ export default function LandingPage() {
               <div className="p-4 rounded-2xl bg-amber-50 border-2 border-accent/40 flex items-center justify-between">
                 <div>
                   <p className="text-sm font-bold text-accent uppercase tracking-wider">Next Dose Due</p>
-                  <p className="text-xl font-black text-navy mt-1">Metformin 500mg</p>
-                  <p className="text-sm text-stone-600">With Lunch • 01:00 PM</p>
+                  <p className="text-xl font-black text-navy mt-1">Prescribed Medication</p>
+                  <p className="text-sm text-stone-600">Scheduled Routine • With Meal</p>
                 </div>
                 <Button variant="primary" size="md">
                   Mark Taken
@@ -103,10 +103,10 @@ export default function LandingPage() {
               <div className="p-4 rounded-2xl bg-stone-50 border-2 border-stone-200 flex items-center justify-between">
                 <div>
                   <p className="text-sm font-bold text-stone-500 uppercase tracking-wider">Upcoming Doctor Visit</p>
-                  <p className="text-lg font-bold text-navy mt-1">Dr. Alok Mehta (Cardiology)</p>
-                  <p className="text-xs text-stone-500">Thursday, 10:30 AM • Apollo Hospital</p>
+                  <p className="text-lg font-bold text-navy mt-1">Specialist Consultation</p>
+                  <p className="text-xs text-stone-500">Scheduled Health Checkup • Medical Clinic</p>
                 </div>
-                <span className="text-teal font-extrabold text-sm">In 4 days</span>
+                <span className="text-teal font-extrabold text-sm">Synchronized</span>
               </div>
             </div>
           </div>

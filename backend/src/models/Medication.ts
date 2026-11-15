@@ -46,7 +46,7 @@ const MedicationSchema = new Schema<IMedication>(
     },
     color: { type: String },
     shape: { type: String },
-    instructions: { type: String, default: 'Take as directed' },
+    instructions: { type: String, default: '' },
     mealContext: {
       type: String,
       enum: ['before_meal', 'with_meal', 'after_meal', 'empty_stomach', 'no_restriction'],
@@ -63,9 +63,9 @@ const MedicationSchema = new Schema<IMedication>(
     endDate: { type: Date },
     prescribingDoctor: { type: String },
     prescriptionNumber: { type: String },
-    currentInventory: { type: Number, default: 30 },
-    refillThreshold: { type: Number, default: 5 },
-    refillPackSize: { type: Number, default: 30 },
+    currentInventory: { type: Number },
+    refillThreshold: { type: Number },
+    refillPackSize: { type: Number },
     status: {
       type: String,
       enum: ['active', 'paused', 'discontinued'],

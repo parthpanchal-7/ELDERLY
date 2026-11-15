@@ -133,9 +133,9 @@ export default function ProfilePage() {
                   <div>
                     <h3 className="text-xl font-bold italic text-navy mb-4">Primary Physician</h3>
                     <div className="space-y-3 text-base">
-                      <p><strong className="text-stone-600">Doctor:</strong> {profile?.primaryPhysician || 'Dr. Alok Mehta'}</p>
-                      <p><strong className="text-stone-600">Phone:</strong> {profile?.primaryPhysicianPhone || '+91 98111 22233'}</p>
-                      <p><strong className="text-stone-600">Email:</strong> {profile?.primaryPhysicianEmail || 'dr.mehta@apollohospitals.demo'}</p>
+                      <p><strong className="text-stone-600">Doctor:</strong> {profile?.primaryPhysician || 'Not specified'}</p>
+                      <p><strong className="text-stone-600">Phone:</strong> {profile?.primaryPhysicianPhone || 'Not specified'}</p>
+                      <p><strong className="text-stone-600">Email:</strong> {profile?.primaryPhysicianEmail || 'Not specified'}</p>
                     </div>
                   </div>
                 </div>

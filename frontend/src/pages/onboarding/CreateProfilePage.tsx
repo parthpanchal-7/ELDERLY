@@ -128,7 +128,7 @@ export default function CreateProfilePage() {
               label="Primary Doctor / Physician Name"
               value={primaryPhysician}
               onChange={(e) => setPrimaryPhysician(e.target.value)}
-              placeholder="Dr. Alok Mehta"
+              placeholder="Physician Name"
             />
 
             <div className="p-4 rounded-2xl bg-amber-50/60 border border-accent/20">
@@ -138,7 +138,7 @@ export default function CreateProfilePage() {
                   label="Contact Name & Relation"
                   value={emergencyName}
                   onChange={(e) => setEmergencyName(e.target.value)}
-                  placeholder="e.g. Priya Sharma (Daughter)"
+                  placeholder="e.g. Family Contact Name"
                   required
                 />
                 <Input
@@ -146,7 +146,7 @@ export default function CreateProfilePage() {
                   type="tel"
                   value={emergencyPhone}
                   onChange={(e) => setEmergencyPhone(e.target.value)}
-                  placeholder="+91 98765 43211"
+                  placeholder="Emergency Phone Number"
                   required
                 />
               </div>

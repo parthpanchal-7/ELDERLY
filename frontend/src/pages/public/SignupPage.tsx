@@ -76,7 +76,7 @@ export default function SignupPage() {
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="e.g. Ramesh Sharma"
+              placeholder="Your Full Name"
               required
             />
 
@@ -94,7 +94,7 @@ export default function SignupPage() {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="+91 98765 43210"
+              placeholder="Phone Number"
             />
 
             <Select

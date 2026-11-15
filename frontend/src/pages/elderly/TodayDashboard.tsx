@@ -374,9 +374,9 @@ export default function TodayDashboard() {
             <div>
               <h3 className="text-2xl font-black italic text-navy">Emergency Assistance Contacts</h3>
               <p className="text-stone-700 text-base">
-                Primary: {profile?.emergencyContacts?.[0]?.name || 'Priya Sharma'} (
-                <a href={`tel:${profile?.emergencyContacts?.[0]?.phone}`} className="font-bold underline text-accent">
-                  {profile?.emergencyContacts?.[0]?.phone || '+91 98765 43211'}
+                Primary: {profile?.emergencyContacts?.[0]?.name || 'Designated Contact'} (
+                <a href={`tel:${profile?.emergencyContacts?.[0]?.phone || '112'}`} className="font-bold underline text-accent">
+                  {profile?.emergencyContacts?.[0]?.phone || '112'}
                 </a>
                 ) • India Emergency: 112
               </p>

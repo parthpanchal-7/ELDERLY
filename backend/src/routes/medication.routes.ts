@@ -114,7 +114,7 @@ router.post('/:profileId/medications', authenticate, requireProfileAccess('canEd
       form: form || 'tablet',
       color,
       shape,
-      instructions: instructions || 'Take with water',
+      instructions: instructions || '',
       mealContext: mealContext || 'no_restriction',
       frequency: frequency || 'daily',
       scheduleTimes,
@@ -123,8 +123,8 @@ router.post('/:profileId/medications', authenticate, requireProfileAccess('canEd
       endDate: endDate ? new Date(endDate) : undefined,
       prescribingDoctor,
       prescriptionNumber,
-      currentInventory: currentInventory ?? 30,
-      refillThreshold: refillThreshold ?? 5,
+      currentInventory: currentInventory !== undefined && currentInventory !== '' ? Number(currentInventory) : undefined,
+      refillThreshold: refillThreshold !== undefined && refillThreshold !== '' ? Number(refillThreshold) : undefined,
       notes,
     });
 

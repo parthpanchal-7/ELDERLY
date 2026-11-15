@@ -182,14 +182,14 @@ export default function AppointmentsPage() {
               label="Doctor Name"
               value={doctorName}
               onChange={(e) => setDoctorName(e.target.value)}
-              placeholder="Dr. Alok Mehta"
+              placeholder="Doctor / Clinician Name"
               required
             />
             <Input
               label="Medical Specialty"
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              placeholder="Cardiology"
+              placeholder="e.g. Cardiology, General"
             />
           </div>
 
@@ -197,7 +197,7 @@ export default function AppointmentsPage() {
             label="Clinic / Hospital Name"
             value={clinicOrHospital}
             onChange={(e) => setClinicOrHospital(e.target.value)}
-            placeholder="Apollo Hospital Indirapuram"
+            placeholder="Clinic or Hospital Name"
             required
           />
 
@@ -213,7 +213,7 @@ export default function AppointmentsPage() {
             label="Address / Location Details"
             value={locationAddress}
             onChange={(e) => setLocationAddress(e.target.value)}
-            placeholder="Plot 1, Ahinsa Khand 2, Ghaziabad"
+            placeholder="Address or telehealth link"
           />
 
           <Input

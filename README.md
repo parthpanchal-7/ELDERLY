@@ -169,30 +169,29 @@ cd saathicare
 npm install
 ```
 
-### 3. Seed Synthetic Demo Data
-```bash
-# Seed demo accounts (Ramesh, Priya, Sunita) and medications
-npm run seed --workspace=backend
-```
-
-### 4. Run Locally
+### 3. Run Locally
 ```bash
 # Start backend (port 5000) and frontend (port 5173) simultaneously
 npm run dev
 ```
-Open **`http://localhost:5173`** in your browser!
+Open **`http://localhost:5173`** in your browser! Register your clean user account to get started.
+
+To clear or reset any data at any time:
+```bash
+npm run seed --workspace=backend  # Runs the database cleaner
+```
 
 ---
 
-## 👤 Pre-Seeded Demo Accounts (Evaluator Guide)
+## 👤 Account Creation & Roles
 
-For hackathon judges, SaathiCare includes **1-Click Demo Login buttons** on the sign-in screen, or you can use these credentials:
+Create an account by registering on the signup screen:
 
-| Role | Name | Email | Password | What to Observe |
-|---|---|---|---|---|
-| **Elderly Owner** | Ramesh Sharma | `ramesh@saathicare.com` | `Password123!` | Today's dose card, large "Mark Taken" button, voice readout, schedule medications |
-| **Family Member** | Priya Sharma | `priya@saathicare.com` | `Password123!` | 7-day adherence chart (Recharts), smart refill watch, escalation notifications |
-| **Caregiver** | Nurse Sunita | `sunita@saathicare.com` | `Password123!` | Patient administration tasks, confirm medication given, audit trail |
+| Role | Intended User | Capabilities |
+|---|---|---|
+| **Elderly Owner** | Older Adult managing health | Schedule medications, confirm/snooze/skip doses, manage care circle invitations & passcodes, view audio readout |
+| **Family Member** | Daughter, Son, Relative | View permitted adherence trends (Recharts), receive unconfirmed dose escalation notifications, monitor refill thresholds |
+| **Caregiver** | Nurse or Professional Aide | Administer scheduled doses, log vital signs (blood pressure, blood glucose), maintain audit records |
 
 ---
 

@@ -84,10 +84,11 @@ router.post('/test', authenticate, async (req: AuthRequest, res: Response) => {
 
     let emailSent = false;
     if (channel === 'email' || req.user.email) {
-      const emailContent = buildDoseReminderEmail(req.user.displayName, 'Morning Blood Pressure Medicine (Demo)', '09:00 AM');
+      const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const emailContent = buildDoseReminderEmail(req.user.displayName, 'Scheduled Medication', currentTime);
       const result = await sendEmail({
         to: req.user.email,
-        subject: 'SaathiCare: Test Notification',
+        subject: 'SaathiCare: Care Notification',
         html: emailContent.html,
       });
       emailSent = result.success;

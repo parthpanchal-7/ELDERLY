@@ -203,7 +203,7 @@ export default function MedicationsPage() {
             label="Medication Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Amlodipine Besylate"
+            placeholder="e.g. Medication Name"
             required
           />
 
