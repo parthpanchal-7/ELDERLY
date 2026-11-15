@@ -41,9 +41,9 @@ const CareProfileSchema = new Schema<ICareProfile>(
     primaryPhysicianEmail: { type: String, trim: true },
     emergencyContacts: [
       {
-        name: { type: String, required: true },
-        relationship: { type: String, required: true },
-        phone: { type: String, required: true },
+        name: { type: String, default: '' },
+        relationship: { type: String, default: 'Contact' },
+        phone: { type: String, default: '' },
         isPrimary: { type: Boolean, default: false },
       },
     ],

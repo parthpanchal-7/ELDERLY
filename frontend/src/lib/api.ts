@@ -1,14 +1,14 @@
 import axios, { AxiosError } from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export const api = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: API_URL ? (API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`) : '/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 15000,
+  timeout: 20000,
 });
 
 // Request interceptor: attach Authorization header if token exists in localStorage

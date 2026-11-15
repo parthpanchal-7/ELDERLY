@@ -16,8 +16,8 @@ export default function MedicationsPage() {
   const [unit, setUnit] = useState('mg');
   const [form, setForm] = useState('tablet');
   const [frequency, setFrequency] = useState('daily');
-  const [time1, setTime1] = useState('');
-  const [time2, setTime2] = useState('');
+  const [time1, setTime1] = useState('09:00');
+  const [time2, setTime2] = useState('21:00');
   const [mealContext, setMealContext] = useState('no_restriction');
   const [instructions, setInstructions] = useState('');
   const [currentInventory, setCurrentInventory] = useState('');

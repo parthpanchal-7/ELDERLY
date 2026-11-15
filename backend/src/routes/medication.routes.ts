@@ -6,7 +6,11 @@ const router = Router();
 
 // Helper to generate dose occurrences for the next 7 days
 export async function scheduleDosesForMedication(medication: any, daysAhead: number = 7) {
-  const times = medication.scheduleTimes || ['08:00'];
+  const times = Array.isArray(medication.scheduleTimes) && medication.scheduleTimes.length > 0
+    ? medication.scheduleTimes.filter((t: any) => typeof t === 'string' && t.includes(':'))
+    : ['09:00'];
+  const validTimes = times.length > 0 ? times : ['09:00'];
+
   const startDate = new Date(medication.startDate || Date.now());
   startDate.setHours(0, 0, 0, 0);
 
@@ -26,8 +30,11 @@ export async function scheduleDosesForMedication(medication: any, daysAhead: num
       }
     }
 
-    for (const timeStr of times) {
-      const [h, m] = timeStr.split(':').map(Number);
+    for (const timeStr of validTimes) {
+      const parts = (timeStr || '09:00').split(':');
+      const h = Number.isNaN(parseInt(parts[0], 10)) ? 9 : parseInt(parts[0], 10);
+      const m = Number.isNaN(parseInt(parts[1], 10)) ? 0 : parseInt(parts[1], 10);
+
       const scheduledTime = new Date(curDate);
       scheduledTime.setHours(h, m, 0, 0);
 
@@ -100,24 +107,29 @@ router.post('/:profileId/medications', authenticate, requireProfileAccess('canEd
       notes,
     } = req.body;
 
-    if (!name || !strength || !unit || !scheduleTimes || scheduleTimes.length === 0) {
-      return res.status(400).json({ error: 'Name, strength, unit, and schedule times are required.' });
+    if (!name || !strength) {
+      return res.status(400).json({ error: 'Medication name and strength are required.' });
     }
+
+    const cleanTimes = Array.isArray(scheduleTimes)
+      ? scheduleTimes.filter((t: any) => typeof t === 'string' && t.trim() !== '' && t.includes(':'))
+      : [];
+    const finalScheduleTimes = cleanTimes.length > 0 ? cleanTimes : ['09:00'];
 
     const medication = new Medication({
       careProfile: req.params.profileId,
-      name,
+      name: name.trim(),
       genericName,
       brandName,
       strength,
-      unit,
+      unit: unit || 'mg',
       form: form || 'tablet',
       color,
       shape,
-      instructions: instructions || '',
+      instructions: instructions || 'Take as prescribed',
       mealContext: mealContext || 'no_restriction',
       frequency: frequency || 'daily',
-      scheduleTimes,
+      scheduleTimes: finalScheduleTimes,
       daysOfWeek,
       startDate: startDate ? new Date(startDate) : new Date(),
       endDate: endDate ? new Date(endDate) : undefined,

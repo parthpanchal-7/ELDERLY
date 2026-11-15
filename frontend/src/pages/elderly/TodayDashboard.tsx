@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -139,6 +140,30 @@ export default function TodayDashboard() {
           <p className="mt-4 text-xl font-bold italic text-navy">
             {language === 'hi' ? 'आज का कार्यक्रम लोड हो रहा है...' : "Loading today's care schedule..."}
           </p>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <DashboardLayout>
+        <div className="max-w-2xl mx-auto py-16 text-center">
+          <Card className="p-8 border-2 border-teal/30 shadow-lg">
+            <h2 className="text-3xl font-black italic text-navy mb-3">
+              {language === 'hi' ? 'साथीकेयर में आपका स्वागत है' : 'Welcome to SaathiCare!'}
+            </h2>
+            <p className="text-stone-600 text-lg mb-6 leading-relaxed">
+              {language === 'hi'
+                ? 'अपनी दैनिक दवाइयां, डॉक्टर अपॉइंटमेंट और स्वास्थ्य निगरानी शुरू करने के लिए कृपया अपनी प्रोफ़ाइल पूरी करें।'
+                : 'To begin tracking your daily medications, appointments, and care circle, please set up your health profile.'}
+            </p>
+            <Link to="/onboarding/profile">
+              <Button variant="primary" size="lg">
+                {language === 'hi' ? 'स्वास्थ्य प्रोफ़ाइल बनाएं' : 'Set Up My Health Profile'}
+              </Button>
+            </Link>
+          </Card>
         </div>
       </DashboardLayout>
     );

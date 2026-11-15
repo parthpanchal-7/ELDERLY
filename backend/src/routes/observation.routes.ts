@@ -29,19 +29,30 @@ router.post('/:profileId/observations', authenticate, requireProfileAccess('canA
   try {
     const { type, value, secondaryValue, unit, notes, userEnteredContext, observedAt } = req.body;
 
-    if (!type || value === undefined || !unit) {
-      return res.status(400).json({ error: 'Type, value, and unit are required.' });
+    if (!type || value === undefined || value === '') {
+      return res.status(400).json({ error: 'Vital sign type and measurement value are required.' });
     }
+
+    const defaultUnits: Record<string, string> = {
+      blood_pressure: 'mmHg',
+      blood_sugar: 'mg/dL',
+      pulse: 'bpm',
+      weight: 'kg',
+      temperature: '°F',
+      spo2: '%',
+    };
+
+    const finalUnit = unit || defaultUnits[type] || 'units';
 
     const observation = new HealthObservation({
       careProfile: req.params.profileId,
       recordedBy: req.user._id,
       type,
       value: Number(value),
-      secondaryValue: secondaryValue !== undefined ? Number(secondaryValue) : undefined,
-      unit,
-      notes,
-      userEnteredContext,
+      secondaryValue: secondaryValue !== undefined && secondaryValue !== '' ? Number(secondaryValue) : undefined,
+      unit: finalUnit,
+      notes: notes || '',
+      userEnteredContext: userEnteredContext || '',
       observedAt: observedAt ? new Date(observedAt) : new Date(),
     });
 

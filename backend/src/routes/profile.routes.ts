@@ -24,17 +24,19 @@ router.post('/', authenticate, async (req: AuthRequest, res: Response) => {
       return res.status(400).json({ error: 'Full name and date of birth are required.' });
     }
 
+    const filteredContacts = (emergencyContacts || []).filter((c: any) => c && (c.name || c.phone));
+
     const careProfile = new CareProfile({
       owner: req.user._id,
-      fullName,
+      fullName: fullName.trim(),
       dateOfBirth: new Date(dateOfBirth),
-      gender,
+      gender: gender || 'prefer_not_to_say',
       bloodGroup,
-      allergies: allergies || [],
-      chronicConditions: chronicConditions || [],
+      allergies: Array.isArray(allergies) ? allergies : typeof allergies === 'string' ? allergies.split(',').map((a: string) => a.trim()).filter(Boolean) : [],
+      chronicConditions: Array.isArray(chronicConditions) ? chronicConditions : typeof chronicConditions === 'string' ? chronicConditions.split(',').map((c: string) => c.trim()).filter(Boolean) : [],
       primaryPhysician,
       primaryPhysicianPhone,
-      emergencyContacts: emergencyContacts || [],
+      emergencyContacts: filteredContacts,
       bio,
       hasCompletedOnboarding: true,
     });

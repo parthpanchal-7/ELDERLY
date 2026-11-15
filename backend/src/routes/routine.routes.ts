@@ -39,16 +39,20 @@ router.post('/:profileId/routines', authenticate, requireProfileAccess(), async 
   try {
     const { title, description, category, scheduleTimes, daysOfWeek } = req.body;
 
-    if (!title || !scheduleTimes || scheduleTimes.length === 0) {
-      return res.status(400).json({ error: 'Title and schedule times are required.' });
+    if (!title) {
+      return res.status(400).json({ error: 'Routine title is required.' });
     }
+
+    const cleanTimes = Array.isArray(scheduleTimes) && scheduleTimes.length > 0
+      ? scheduleTimes.filter((t: any) => typeof t === 'string' && t.trim() !== '')
+      : ['08:00'];
 
     const routine = new Routine({
       careProfile: req.params.profileId,
-      title,
-      description,
+      title: title.trim(),
+      description: description || '',
       category: category || 'hydration',
-      scheduleTimes,
+      scheduleTimes: cleanTimes.length > 0 ? cleanTimes : ['08:00'],
       daysOfWeek,
     });
 

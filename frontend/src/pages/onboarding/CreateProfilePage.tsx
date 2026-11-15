@@ -28,22 +28,26 @@ export default function CreateProfilePage() {
     setError('');
 
     try {
+      const contacts = (emergencyName.trim() || emergencyPhone.trim())
+        ? [
+            {
+              name: emergencyName.trim() || 'Primary Contact',
+              relationship: 'Primary Contact',
+              phone: emergencyPhone.trim() || '112',
+              isPrimary: true,
+            },
+          ]
+        : [];
+
       const res = await api.post('/profiles', {
         fullName,
         dateOfBirth,
-        gender,
+        gender: gender || 'prefer_not_to_say',
         bloodGroup,
         chronicConditions: chronicConditions.split(',').map((c) => c.trim()).filter(Boolean),
         allergies: allergies.split(',').map((a) => a.trim()).filter(Boolean),
         primaryPhysician,
-        emergencyContacts: [
-          {
-            name: emergencyName,
-            relationship: 'Primary Contact',
-            phone: emergencyPhone,
-            isPrimary: true,
-          },
-        ],
+        emergencyContacts: contacts,
       });
 
       updateUser({ hasCompletedOnboarding: true });

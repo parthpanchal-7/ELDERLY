@@ -35,19 +35,19 @@ router.post('/:profileId/appointments', authenticate, requireProfileAccess('canE
       reminderMinutesBefore,
     } = req.body;
 
-    if (!title || !doctorName || !clinicOrHospital || !appointmentDateTime) {
-      return res.status(400).json({ error: 'Title, doctor name, clinic/hospital, and datetime are required.' });
+    if (!title || !doctorName || !appointmentDateTime) {
+      return res.status(400).json({ error: 'Title, doctor name, and appointment date/time are required.' });
     }
 
     const appointment = new Appointment({
       careProfile: req.params.profileId,
-      title,
-      doctorName,
-      specialty,
-      clinicOrHospital,
-      locationAddress,
+      title: title.trim(),
+      doctorName: doctorName.trim(),
+      specialty: specialty || 'General Medicine',
+      clinicOrHospital: clinicOrHospital?.trim() || 'Medical Clinic / Hospital',
+      locationAddress: locationAddress || '',
       appointmentDateTime: new Date(appointmentDateTime),
-      notes,
+      notes: notes || '',
       reminderMinutesBefore: reminderMinutesBefore || [1440, 60],
     });
 

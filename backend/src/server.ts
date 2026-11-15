@@ -19,6 +19,7 @@ import observationRoutes from './routes/observation.routes.js';
 import notificationRoutes from './routes/notification.routes.js';
 import analyticsRoutes from './routes/analytics.routes.js';
 import auditLogRoutes from './routes/auditLog.routes.js';
+import documentRoutes from './routes/document.routes.js';
 
 export function createServer() {
   const app = express();
@@ -79,18 +80,24 @@ export function createServer() {
   // Apply general rate limiter
   app.use('/api', apiLimiter);
 
-  // Mount API Routes
-  app.use('/api/auth', authRoutes);
-  app.use('/api/profiles', profileRoutes);
-  app.use('/api/care-circles', careCircleRoutes);
-  app.use('/api/medications', medicationRoutes);
-  app.use('/api/doses', doseRoutes);
-  app.use('/api/appointments', appointmentRoutes);
-  app.use('/api/routines', routineRoutes);
-  app.use('/api/observations', observationRoutes);
-  app.use('/api/notifications', notificationRoutes);
-  app.use('/api/analytics', analyticsRoutes);
-  app.use('/api/audit-logs', auditLogRoutes);
+  // Mount API Routes (Supports both standard /api/* and serverless stripped sub-paths)
+  const mountRoutes = (prefix = '') => {
+    app.use(`${prefix}/auth`, authRoutes);
+    app.use(`${prefix}/profiles`, profileRoutes);
+    app.use(`${prefix}/care-circles`, careCircleRoutes);
+    app.use(`${prefix}/medications`, medicationRoutes);
+    app.use(`${prefix}/doses`, doseRoutes);
+    app.use(`${prefix}/appointments`, appointmentRoutes);
+    app.use(`${prefix}/routines`, routineRoutes);
+    app.use(`${prefix}/observations`, observationRoutes);
+    app.use(`${prefix}/notifications`, notificationRoutes);
+    app.use(`${prefix}/analytics`, analyticsRoutes);
+    app.use(`${prefix}/audit-logs`, auditLogRoutes);
+    app.use(`${prefix}/documents`, documentRoutes);
+  };
+
+  mountRoutes('/api');
+  mountRoutes('');
 
   // 404 handler
   app.use((req, res) => {
