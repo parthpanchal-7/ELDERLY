@@ -42,12 +42,31 @@
 }
 
 /* ============================================================
+   Accessibility: Text Size Modes (Scales all Tailwind REM units)
+   ============================================================ */
+html {
+  font-size: 16px;
+  transition: font-size 150ms ease-in-out;
+}
+
+html.text-size-normal {
+  font-size: 16px !important;
+}
+
+html.text-size-large {
+  font-size: 20px !important; /* ~25% larger across the entire platform */
+}
+
+html.text-size-xlarge {
+  font-size: 24px !important; /* ~50% larger for elderly reading ease */
+}
+
+/* ============================================================
    Base Styles
    ============================================================ */
 @layer base {
   html {
     font-family: var(--font-family-base);
-    font-size: var(--font-size-base);
     line-height: var(--line-height-base);
     color: var(--color-navy);
     background-color: var(--color-canvas);
@@ -151,4 +170,107 @@
   .badge {
     @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold;
   }
+}
+
+/* ============================================================
+   Accessibility: High Contrast Mode (WCAG 2.2 AAA Contrast)
+   ============================================================ */
+html.high-contrast {
+  --color-navy: #000000;
+  --color-teal: #008779;
+  --color-mint: #FFFFFF;
+  --color-canvas: #000000;
+  --color-accent: #FF5722;
+}
+
+html.high-contrast body {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+html.high-contrast header,
+html.high-contrast nav,
+html.high-contrast main,
+html.high-contrast footer,
+html.high-contrast section,
+html.high-contrast aside {
+  background-color: #000000 !important;
+  border-color: #FFFFFF !important;
+}
+
+html.high-contrast .bg-white,
+html.high-contrast .bg-canvas,
+html.high-contrast .bg-soft-mint,
+html.high-contrast .bg-stone-50,
+html.high-contrast .bg-stone-100,
+html.high-contrast .bg-stone-200 {
+  background-color: #121212 !important;
+  color: #FFFFFF !important;
+}
+
+html.high-contrast h1,
+html.high-contrast h2,
+html.high-contrast h3,
+html.high-contrast h4,
+html.high-contrast h5,
+html.high-contrast h6,
+html.high-contrast p,
+html.high-contrast span,
+html.high-contrast label,
+html.high-contrast li {
+  color: #FFFFFF !important;
+}
+
+html.high-contrast .text-navy,
+html.high-contrast .text-stone-900,
+html.high-contrast .text-stone-800,
+html.high-contrast .text-stone-700,
+html.high-contrast .text-stone-600,
+html.high-contrast .text-stone-500,
+html.high-contrast .text-stone-400 {
+  color: #FFFFFF !important;
+}
+
+html.high-contrast .text-teal {
+  color: #00FFCC !important; /* High-visibility neon aqua */
+}
+
+html.high-contrast .text-accent {
+  color: #FFD600 !important; /* High-visibility gold */
+}
+
+html.high-contrast .border-stone-200,
+html.high-contrast .border-stone-300,
+html.high-contrast .border-stone-400,
+html.high-contrast .border-mint {
+  border-color: #FFFFFF !important;
+}
+
+html.high-contrast .card,
+html.high-contrast button,
+html.high-contrast input,
+html.high-contrast select,
+html.high-contrast textarea {
+  border: 2px solid #FFFFFF !important;
+}
+
+html.high-contrast button:focus-visible,
+html.high-contrast input:focus-visible,
+html.high-contrast select:focus-visible {
+  outline: 4px solid #FFFF00 !important;
+  outline-offset: 3px !important;
+}
+
+html.high-contrast .btn-primary,
+html.high-contrast .bg-teal {
+  background-color: #008779 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #00FFCC !important;
+}
+
+html.high-contrast .btn-secondary,
+html.high-contrast .bg-soft-mint {
+  background-color: #1A302A !important;
+  color: #FFFFFF !important;
+  border: 2px solid #00FFCC !important;
 }

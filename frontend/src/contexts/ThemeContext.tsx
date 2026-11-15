@@ -1,15 +1,19 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { translations, type Language, type TranslationKey } from '@/lib/translations';
 
-type TextSize = 'normal' | 'large' | 'xlarge';
-type Language = 'en' | 'hi';
+export type TextSize = 'normal' | 'large' | 'xlarge';
 
 interface ThemeContextType {
   textSize: TextSize;
   setTextSize: (size: TextSize) => void;
+  cycleTextSize: () => void;
   highContrast: boolean;
   setHighContrast: (high: boolean) => void;
+  toggleHighContrast: () => void;
   language: Language;
   setLanguage: (lang: Language) => void;
+  toggleLanguage: () => void;
+  t: (key: TranslationKey) => string;
   speak: (text: string) => void;
   isSpeaking: boolean;
   stopSpeaking: () => void;
@@ -32,25 +36,66 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [isSpeaking, setIsSpeaking] = useState(false);
 
+  // Apply text size changes to HTML root element
   useEffect(() => {
     localStorage.setItem('saathicare_text_size', textSize);
     const root = document.documentElement;
     root.classList.remove('text-size-normal', 'text-size-large', 'text-size-xlarge');
     root.classList.add(`text-size-${textSize}`);
+    root.setAttribute('data-text-size', textSize);
+
+    // Apply direct root font size for foolproof Tailwind rem scaling
+    if (textSize === 'normal') {
+      root.style.fontSize = '16px';
+    } else if (textSize === 'large') {
+      root.style.fontSize = '20px';
+    } else if (textSize === 'xlarge') {
+      root.style.fontSize = '24px';
+    }
   }, [textSize]);
 
+  // Apply High Contrast mode to HTML root element
   useEffect(() => {
     localStorage.setItem('saathicare_high_contrast', String(highContrast));
+    const root = document.documentElement;
     if (highContrast) {
-      document.documentElement.classList.add('high-contrast');
+      root.classList.add('high-contrast');
+      root.setAttribute('data-high-contrast', 'true');
     } else {
-      document.documentElement.classList.remove('high-contrast');
+      root.classList.remove('high-contrast');
+      root.removeAttribute('data-high-contrast');
     }
   }, [highContrast]);
 
+  // Persist language
   useEffect(() => {
     localStorage.setItem('saathicare_lang', language);
+    document.documentElement.lang = language;
   }, [language]);
+
+  const cycleTextSize = useCallback(() => {
+    setTextSize((prev) => {
+      if (prev === 'normal') return 'large';
+      if (prev === 'large') return 'xlarge';
+      return 'normal';
+    });
+  }, []);
+
+  const toggleHighContrast = useCallback(() => {
+    setHighContrast((prev) => !prev);
+  }, []);
+
+  const toggleLanguage = useCallback(() => {
+    setLanguage((prev) => (prev === 'en' ? 'hi' : 'en'));
+  }, []);
+
+  const t = useCallback(
+    (key: TranslationKey): string => {
+      const langDict = translations[language] || translations.en;
+      return langDict[key] || translations.en[key] || key;
+    },
+    [language]
+  );
 
   const speak = (text: string) => {
     if (!('speechSynthesis' in window)) {
@@ -60,7 +105,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.9; // Slightly slower, calm cadence for elderly comprehension
+    utterance.rate = 0.88; // Calm cadence for elderly comprehension
     utterance.pitch = 1.0;
     utterance.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
 
@@ -83,10 +128,14 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       value={{
         textSize,
         setTextSize,
+        cycleTextSize,
         highContrast,
         setHighContrast,
+        toggleHighContrast,
         language,
         setLanguage,
+        toggleLanguage,
+        t,
         speak,
         isSpeaking,
         stopSpeaking,

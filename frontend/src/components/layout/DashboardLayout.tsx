@@ -29,28 +29,28 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   readAloudText,
 }) => {
   const { user } = useAuth();
-  const { speak } = useTheme();
+  const { speak, t } = useTheme();
 
   const elderlyLinks = [
-    { to: '/dashboard', label: 'Today', icon: Clock },
-    { to: '/medications', label: 'Medications', icon: Pill },
-    { to: '/appointments', label: 'Appointments', icon: Calendar },
-    { to: '/routines', label: 'Routines', icon: CheckSquare },
-    { to: '/care-circle', label: 'Care Circle', icon: Users },
-    { to: '/notifications', label: 'Alerts', icon: Bell },
-    { to: '/profile', label: 'My Health', icon: UserCheck },
+    { to: '/dashboard', label: t('navToday'), icon: Clock },
+    { to: '/medications', label: t('navMedications'), icon: Pill },
+    { to: '/appointments', label: t('navAppointments'), icon: Calendar },
+    { to: '/routines', label: t('navRoutines'), icon: CheckSquare },
+    { to: '/care-circle', label: t('navCareCircle'), icon: Users },
+    { to: '/notifications', label: t('navAlerts'), icon: Bell },
+    { to: '/profile', label: t('navMyHealth'), icon: UserCheck },
   ];
 
   const familyLinks = [
-    { to: '/family', label: 'Overview', icon: Users },
-    { to: '/family/adherence', label: 'Adherence Trends', icon: TrendingUp },
-    { to: '/family/alerts', label: 'Care Alerts', icon: AlertTriangle },
+    { to: '/family', label: t('navOverview'), icon: Users },
+    { to: '/family/adherence', label: t('navAdherence'), icon: TrendingUp },
+    { to: '/family/alerts', label: t('navCareAlerts'), icon: AlertTriangle },
   ];
 
   const caregiverLinks = [
-    { to: '/caregiver', label: 'Assigned Patients', icon: Users },
-    { to: '/caregiver/tasks', label: 'Task Queue', icon: ClipboardList },
-    { to: '/caregiver/audit', label: 'Audit Trail', icon: CheckSquare },
+    { to: '/caregiver', label: t('navAssignedPatients'), icon: Users },
+    { to: '/caregiver/tasks', label: t('navTaskQueue'), icon: ClipboardList },
+    { to: '/caregiver/audit', label: t('navAuditTrail'), icon: CheckSquare },
   ];
 
   let currentNav = elderlyLinks;
@@ -96,31 +96,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                 title="Read today's schedule aloud"
               >
                 <Volume2 className="w-5 h-5" />
-                <span>Read Aloud</span>
+                <span>{t('voiceReadout')}</span>
               </button>
             )}
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
-
-      {/* Accessible Footer */}
-      <footer className="bg-navy text-white/80 py-8 border-t-4 border-teal mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-4">
-          <div>
-            <p className="text-xl font-bold italic text-white">SaathiCare</p>
-            <p className="text-sm text-white/70">Care that feels close to home. Designed for dignity, security, and family trust.</p>
-          </div>
-          <div className="text-xs text-white/60">
-            <p>Emergency Services (India): 112 | Senior Citizen Helpline: 14567</p>
-            <p className="mt-1">All health records encrypted and permission-gated.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

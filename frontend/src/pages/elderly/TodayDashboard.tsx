@@ -19,7 +19,7 @@ import {
 
 export default function TodayDashboard() {
   const { user } = useAuth();
-  const { speak } = useTheme();
+  const { speak, t, language } = useTheme();
 
   const [profile, setProfile] = useState<any>(null);
   const [doses, setDoses] = useState<any[]>([]);
@@ -118,12 +118,17 @@ export default function TodayDashboard() {
   const nextDose = doses.find((d) => d.status === 'due' || d.status === 'scheduled' || d.status === 'unconfirmed');
 
   // Text for Speech Synthesis Read Aloud
+  const remainingCount = doses.filter((d) => d.status !== 'taken').length;
   const readAloudSummary = profile
-    ? `Namaste ${profile.fullName}. Today is ${new Date().toLocaleDateString('en-IN', { weekday: 'long', month: 'long', day: 'numeric' })}. You have ${
-        doses.filter((d) => d.status !== 'taken').length
-      } medication doses remaining today. ${
-        nextDose ? `Your next medication is ${nextDose.medication?.name} scheduled for ${new Date(nextDose.scheduledTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.` : 'All medications are up to date!'
-      } ${appointments.length > 0 ? `You also have an upcoming appointment with Dr. ${appointments[0].doctorName}.` : ''}`
+    ? language === 'hi'
+      ? `नमस्ते ${profile.fullName}। आज ${remainingCount} दवाइयां बाकी हैं। ${
+          nextDose ? `आपकी अगली दवा ${nextDose.medication?.name} है।` : 'आज की सभी दवाइयां पूरी हो चुकी हैं।'
+        }`
+      : `Namaste ${profile.fullName}. Today is ${new Date().toLocaleDateString('en-IN', { weekday: 'long', month: 'long', day: 'numeric' })}. You have ${
+          remainingCount
+        } medication doses remaining today. ${
+          nextDose ? `Your next medication is ${nextDose.medication?.name} scheduled for ${new Date(nextDose.scheduledTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.` : 'All medications are up to date!'
+        } ${appointments.length > 0 ? `You also have an upcoming appointment with Dr. ${appointments[0].doctorName}.` : ''}`
     : '';
 
   if (loading) {
@@ -131,7 +136,9 @@ export default function TodayDashboard() {
       <DashboardLayout>
         <div className="py-24 flex flex-col items-center justify-center">
           <Spinner size="lg" />
-          <p className="mt-4 text-xl font-bold italic text-navy">Loading today's care schedule...</p>
+          <p className="mt-4 text-xl font-bold italic text-navy">
+            {language === 'hi' ? 'आज का कार्यक्रम लोड हो रहा है...' : "Loading today's care schedule..."}
+          </p>
         </div>
       </DashboardLayout>
     );
@@ -144,10 +151,10 @@ export default function TodayDashboard() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 sm:p-8 rounded-3xl border-2 border-stone-200 shadow-sm">
           <div>
             <h1 className="text-3xl sm:text-4xl font-black italic text-navy">
-              Namaste, {profile?.fullName || user?.displayName} 🙏
+              {t('greeting')}, {profile?.fullName || user?.displayName} 🙏
             </h1>
             <p className="text-stone-600 text-lg mt-1 font-medium">
-              Today is {new Date().toLocaleDateString('en-IN', { weekday: 'long', month: 'long', day: 'numeric' })}
+              {t('todayIs')} {new Date().toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN', { weekday: 'long', month: 'long', day: 'numeric' })}
             </p>
           </div>
           <div className="flex items-center space-x-3">
@@ -156,12 +163,12 @@ export default function TodayDashboard() {
               className="px-5 py-3 rounded-2xl bg-soft-mint text-teal font-extrabold text-base hover:bg-teal hover:text-white transition-all flex items-center space-x-2 border-2 border-teal/20 min-h-[48px]"
             >
               <Volume2 className="w-5 h-5" />
-              <span>Voice Readout</span>
+              <span>{t('voiceReadout')}</span>
             </button>
             <button
               onClick={fetchDashboardData}
               className="p-3 rounded-2xl border-2 border-stone-300 text-stone-600 hover:border-teal hover:text-teal transition-all min-h-[48px] min-w-[48px] flex items-center justify-center"
-              title="Refresh schedule"
+              title={t('refresh')}
             >
               <RefreshCw className="w-5 h-5" />
             </button>
@@ -176,7 +183,7 @@ export default function TodayDashboard() {
           >
             <div className="flex items-center justify-between flex-wrap gap-2 mb-4">
               <span className="text-xs font-black uppercase tracking-widest text-teal bg-soft-mint px-3 py-1 rounded-full border border-teal/20">
-                ⭐ Priority Action • Next Due Dose
+                ⭐ {t('priorityAction')}
               </span>
               <Badge status={nextDose.status} />
             </div>
@@ -199,10 +206,10 @@ export default function TodayDashboard() {
 
                 <div className="mt-4 p-4 rounded-2xl bg-canvas border border-stone-200">
                   <p className="text-stone-700 text-lg font-medium">
-                    <strong>Instructions:</strong> {nextDose.medication?.instructions || 'Take with water'}
+                    <strong>{t('instructions')}:</strong> {nextDose.medication?.instructions || 'Take with water'}
                   </p>
                   <p className="text-stone-500 text-base mt-1">
-                    Scheduled Time:{' '}
+                    {t('scheduledTime')}:{' '}
                     <strong>
                       {new Date(nextDose.scheduledTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </strong>{' '}
@@ -220,7 +227,7 @@ export default function TodayDashboard() {
                   className="w-full text-2xl shadow-lg"
                   isLoading={actionLoading === nextDose._id}
                 >
-                  <CheckCircle2 className="w-7 h-7 mr-2" /> Mark as Taken
+                  <CheckCircle2 className="w-7 h-7 mr-2" /> {t('markAsTaken')}
                 </Button>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -231,7 +238,7 @@ export default function TodayDashboard() {
                     className="w-full text-base"
                     disabled={actionLoading === nextDose._id}
                   >
-                    <Clock className="w-4 h-4 mr-1" /> Snooze 15m
+                    <Clock className="w-4 h-4 mr-1" /> {t('snooze15m')}
                   </Button>
                   <Button
                     onClick={() => setSkipModalDoseId(nextDose._id)}
@@ -240,7 +247,7 @@ export default function TodayDashboard() {
                     className="w-full text-base text-stone-600 border-stone-300 hover:text-red-600 hover:border-red-400"
                     disabled={actionLoading === nextDose._id}
                   >
-                    Skip Dose...
+                    {t('skipDose')}
                   </Button>
                 </div>
               </div>
@@ -249,9 +256,9 @@ export default function TodayDashboard() {
         ) : (
           <Card className="p-8 text-center bg-soft-mint/50 border-2 border-teal/30">
             <CheckCircle2 className="w-16 h-16 text-teal mx-auto mb-3" />
-            <h2 className="text-3xl font-black italic text-navy">All caught up for now!</h2>
-            <p className="text-stone-600 text-lg mt-1">
-              You have taken all your scheduled medications for this moment. Wonderful job maintaining your routine.
+            <h2 className="text-3xl font-black italic text-navy">{t('allDosesCompleted')}</h2>
+            <p className="text-stone-600 text-lg mt-1 font-medium">
+              {t('greatJob')}
             </p>
           </Card>
         )}
@@ -320,13 +327,13 @@ export default function TodayDashboard() {
           {/* Daily Routines & Care Checklist */}
           <div className="space-y-4">
             <h2 className="text-2xl font-black italic text-navy flex items-center">
-              <CheckSquare className="w-6 h-6 mr-2 text-teal" /> Daily Health Routines
+              <CheckSquare className="w-6 h-6 mr-2 text-teal" /> {t('dailyRoutines')}
             </h2>
 
             <div className="space-y-3">
               {routines.length === 0 ? (
                 <div className="p-6 bg-white rounded-2xl border text-center text-stone-500">
-                  No daily routines added yet.
+                  {t('noRoutines')}
                 </div>
               ) : (
                 routines.map((routine) => {
@@ -355,7 +362,7 @@ export default function TodayDashboard() {
                         }`}
                       >
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>{isDone ? 'Done' : 'Mark Done'}</span>
+                        <span>{isDone ? t('completed') : t('markDone')}</span>
                       </button>
                     </div>
                   );
@@ -372,7 +379,7 @@ export default function TodayDashboard() {
               <PhoneCall className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-2xl font-black italic text-navy">Emergency Assistance Contacts</h3>
+              <h3 className="text-2xl font-black italic text-navy">{t('emergencyContacts')}</h3>
               <p className="text-stone-700 text-base">
                 Primary: {profile?.emergencyContacts?.[0]?.name || 'Designated Contact'} (
                 <a href={`tel:${profile?.emergencyContacts?.[0]?.phone || '112'}`} className="font-bold underline text-accent">
@@ -386,7 +393,7 @@ export default function TodayDashboard() {
             href={`tel:${profile?.emergencyContacts?.[0]?.phone || '112'}`}
             className="px-6 py-3 bg-accent text-white font-extrabold rounded-2xl text-lg hover:bg-accent/90 shadow-md min-h-[48px] flex items-center justify-center whitespace-nowrap"
           >
-            Call Primary Contact
+            {language === 'hi' ? 'प्राथमिक संपर्क को कॉल करें' : 'Call Primary Contact'}
           </a>
         </div>
       </div>

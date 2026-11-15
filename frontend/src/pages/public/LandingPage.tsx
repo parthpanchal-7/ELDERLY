@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@/contexts/ThemeContext';
 import {
   Heart,
   ShieldCheck,
@@ -11,10 +12,20 @@ import {
   CheckCircle2,
   Lock,
   ArrowRight,
+  Eye,
+  Languages,
 } from 'lucide-react';
 import { Button } from '@/components/ui';
 
 export default function LandingPage() {
+  const { textSize, cycleTextSize, highContrast, toggleHighContrast, language, toggleLanguage, t } = useTheme();
+
+  const getTextSizeLabel = () => {
+    if (textSize === 'normal') return 'Normal';
+    if (textSize === 'large') return 'Large';
+    return 'X-Large';
+  };
+
   return (
     <div className="min-h-screen bg-canvas font-sans text-navy flex flex-col">
       {/* Top Banner Navigation */}
@@ -26,16 +37,58 @@ export default function LandingPage() {
             </div>
             <div>
               <span className="text-2xl font-black italic tracking-tight text-navy">SaathiCare</span>
-              <span className="hidden sm:block text-xs font-bold text-teal">Care that feels close to home</span>
+              <span className="hidden sm:block text-xs font-bold text-teal">{t('brandTagline')}</span>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <Link to="/login" className="px-5 py-2.5 font-bold text-lg text-navy hover:text-teal transition-colors">
-              Sign In
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Text Size Accessibility Toggle */}
+            <button
+              onClick={cycleTextSize}
+              className="px-3 py-2 rounded-xl border-2 border-stone-300 hover:border-teal text-navy font-bold text-sm min-h-[44px] flex items-center space-x-1.5 transition-all bg-white"
+              title="Adjust text size (Normal / Large / Extra Large)"
+              aria-label={`Adjust text size, current size is ${textSize}`}
+            >
+              <span className="text-base font-black">Aa</span>
+              <span className="text-xs text-teal font-extrabold uppercase">({getTextSizeLabel()})</span>
+            </button>
+
+            {/* High Contrast Toggle */}
+            <button
+              onClick={toggleHighContrast}
+              className={`px-3 py-2 rounded-xl border-2 transition-all min-h-[44px] flex items-center space-x-1.5 font-bold text-sm ${
+                highContrast
+                  ? 'bg-navy text-white border-white ring-2 ring-yellow-400'
+                  : 'bg-white border-stone-300 text-stone-700 hover:border-navy'
+              }`}
+              title="Toggle High Contrast Mode (WCAG AAA)"
+              aria-label="Toggle high contrast mode"
+              aria-pressed={highContrast}
+            >
+              <Eye className="w-4 h-4" />
+              <span className="text-xs font-black uppercase">
+                {highContrast ? 'Contrast ON' : 'Contrast'}
+              </span>
+            </button>
+
+            {/* Language Toggle (EN / HI) */}
+            <button
+              onClick={toggleLanguage}
+              className="px-3 py-2 rounded-xl border-2 border-stone-300 hover:border-teal text-navy font-bold text-sm min-h-[44px] flex items-center space-x-1.5 transition-all bg-white"
+              title="Switch Language (English / हिंदी)"
+              aria-label={`Switch Language, current language is ${language === 'en' ? 'English' : 'Hindi'}`}
+            >
+              <Languages className="w-4 h-4 text-teal" />
+              <span className="font-extrabold uppercase text-teal">
+                {language === 'en' ? 'EN' : 'HI'}
+              </span>
+            </button>
+
+            <Link to="/login" className="px-3 sm:px-5 py-2.5 font-bold text-base sm:text-lg text-navy hover:text-teal transition-colors">
+              {t('signIn')}
             </Link>
             <Link to="/signup">
               <Button variant="primary" size="md">
-                Get Started
+                {language === 'hi' ? 'शुरू करें' : 'Get Started'}
               </Button>
             </Link>
           </div>
